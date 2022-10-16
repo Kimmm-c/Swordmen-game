@@ -27,7 +27,7 @@ class Sprite {
 
     animateFrames() {
         this.framesElapsed++
-    
+
         if (this.framesElapsed % this.framesHold === 0) {
             if (this.currentFrame < this.frame - 1) {
                 this.currentFrame++
@@ -71,10 +71,10 @@ class Fighter extends Sprite {
         this.health = 100
         this.sprites = sprites
 
-        for(const sprite in this.sprites) {
+        for (const sprite in this.sprites) {
             sprites[sprite].image = new Image()
             sprites[sprite].image.src = sprites[sprite].imageSrc
-            
+
         }
     }
 
@@ -111,5 +111,29 @@ class Fighter extends Sprite {
         // setTimeout(() => {
         //     this.isAttacking = false
         // }, 100)
+    }
+
+    switchSprite(sprite) {
+        switch (sprite) {
+            case 'idle':
+                if (this.image !== this.sprites.idle.image) {
+                    this.image = this.sprites.idle.image
+                    player.frame = player.sprites.idle.frame
+                }
+                break;
+            case 'run':
+                if (this.image !== this.sprites.run.image) {
+                    player.image = player.sprites.run.image
+                    player.frame = player.sprites.run.frame
+                }
+                break;
+            case 'jump':
+                if (this.image !== this.sprites.jump.image) {
+                    player.image = player.sprites.jump.image
+                    player.frame = player.sprites.jump.frame
+                }
+                break;
+
+        }
     }
 }

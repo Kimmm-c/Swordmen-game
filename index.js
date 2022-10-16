@@ -61,7 +61,7 @@ const player = new Fighter({
         },
         jump: {
             imageSrc: './img/samuraiMack/Jump.png',
-            frame: 8
+            frame: 2
         }
     }
 })
@@ -102,14 +102,14 @@ function animate() {
     player.velocity.x = 0
     enemy.velocity.x = 0
 
-    player.image = player.sprites.idle.image
+    player.switchSprite('idle')
     //left player movement
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -5
-        player.image = player.sprites.run.image
+        player.switchSprite('run')
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5
-        player.image = player.sprites.run.image
+        player.switchSprite('run')
     }
 
     //right player movement
@@ -119,6 +119,11 @@ function animate() {
         enemy.velocity.x = 5
     }
 
+    // check if player jumps
+    if (player.velocity.y < 0) {
+        player.image = player.sprites.jump.image
+        player.frame = player.sprites.jump.frame
+    }
     // check if player 1 successfully strikes
     if (detectCollision(player, enemy) && player.isAttacking) {
         enemy.health -= 20
@@ -169,6 +174,7 @@ window.addEventListener('keydown', (e) => {         //function fired when a key 
             break;
         case 'ArrowUp':
             enemy.velocity.y = -20
+            
             break;
 
         //left player attacks
