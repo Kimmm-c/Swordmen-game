@@ -30,14 +30,21 @@ const player = new Fighter({
     position: { x: 0, y: 0 },
     velocity: { x: 0, y: 0 },
     color: 'orange',
-    offset: { x: 0, y: 0 }
+    imageSrc: './img/samuraiMack/Idle.png',
+    scale: 2.5,
+    frame: 8,
+    offset: {x: 215, y: 157}
 })
 
 const enemy = new Fighter({
     position: { x: 400, y: 100 },
     velocity: { x: 0, y: 0 },
     color: 'red',
-    offset: { x: -50, y: 0 }
+    offset: { x: -50, y: 0 },
+    imageSrc: './img/kenji/Idle.png',
+    scale: 2.5,
+    frame: 4,
+    offset: {x: 215, y: 170}
 })
 
 const keys = {

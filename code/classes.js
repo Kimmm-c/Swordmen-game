@@ -1,5 +1,5 @@
 class Sprite {
-    constructor({ position, imageSrc, scale = 1, frame = 1 }) {
+    constructor({ position, imageSrc, scale = 1, frame = 1, offset = { x: 0, y: 0 } }) {
         this.position = position
         this.height = 150
         this.width = 50
@@ -10,6 +10,7 @@ class Sprite {
         this.currentFrame = 0
         this.framesElapsed = 0
         this.framesHold = 5            //hold the same frame 5 times
+        this.offset = offset
     }
 
     draw() {
@@ -18,16 +19,15 @@ class Sprite {
             0,
             this.image.width / this.frame,
             this.image.height,
-            this.position.x,
-            this.position.y,
+            this.position.x - this.offset.x,
+            this.position.y - this.offset.y,
             this.image.width / this.frame * this.scale,
             this.image.height * this.scale)           //canvas function to manipulate graphic
     }
 
-    update() {
-        this.draw()
-        this.framesElapsed++            
-
+    animateFrames() {
+        this.framesElapsed++
+    
         if (this.framesElapsed % this.framesHold === 0) {
             if (this.currentFrame < this.frame - 1) {
                 this.currentFrame++
@@ -37,11 +37,22 @@ class Sprite {
         }
     }
 
+    update() {
+        this.draw()
+        this.animateFrames()
+    }
+
 }
 
-class Fighter {
-    constructor({ position, velocity, color, offset }) {
-        this.position = position
+class Fighter extends Sprite {
+    constructor({ position, velocity, color, imageSrc, scale = 1, frame = 1, offset = { x: 0, y: 0 } }) {
+        super({
+            position,
+            imageSrc,
+            scale,
+            frame,
+            offset
+        })
         this.velocity = velocity
         this.height = 150
         this.width = 50
@@ -60,19 +71,21 @@ class Fighter {
         this.health = 100
     }
 
-    draw() {
-        c.fillStyle = this.color
-        c.fillRect(this.position.x, this.position.y, this.width, this.height) //fill rectangle representing a Sprite object
+    // draw() {
+    //     c.fillStyle = this.color
+    //     c.fillRect(this.position.x, this.position.y, this.width, this.height) //fill rectangle representing a Sprite object
 
-        //attack unit attached with the player
-        if (this.isAttacking) {
-            c.fillStyle = 'blue'
-            c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
-        }
-    }
+    //     //attack unit attached with the player
+    //     if (this.isAttacking) {
+    //         c.fillStyle = 'blue'
+    //         c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+    //     }
+    // }
 
     update() {
         this.draw()
+        this.animateFrames()
+
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x
         this.attackBox.position.y = this.position.y
 
