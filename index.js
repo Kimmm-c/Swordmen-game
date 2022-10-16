@@ -70,11 +70,41 @@ const enemy = new Fighter({
     position: { x: 400, y: 100 },
     velocity: { x: 0, y: 0 },
     color: 'red',
-    offset: { x: -50, y: 0 },
     imageSrc: './img/kenji/Idle.png',
     scale: 2.5,
     frame: 4,
-    offset: { x: 215, y: 170 }
+    offset: { x: 215, y: 170 },
+    sprites: {
+        idle: {
+            imageSrc: './img/kenji/Idle.png',
+            frame: 4
+        },
+        run: {
+            imageSrc: './img/kenji/Run.png',
+            frame: 8
+        },
+        attack1: {
+            imageSrc: './img/kenji/Attack1.png',
+            frame: 4
+        },
+        attack2: {
+            imageSrc: './img/kenji/Attack2.png',
+            frame: 6
+        },
+        fall: {
+            imageSrc: './img/kenji/Fall.png',
+            frame: 2
+        },
+        death: {
+            imageSrc: './img/kenji/Death.png',
+            frame: 8
+        },
+        jump: {
+            imageSrc: './img/kenji/Jump.png',
+            frame: 2
+        }
+    }
+
 })
 
 const keys = {
@@ -117,18 +147,32 @@ function animate() {
     //right player movement
     if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
         enemy.velocity.x = -5
+        enemy.switchSprite('run')
     } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
         enemy.velocity.x = 5
+        enemy.switchSprite('run')
+    }else {
+        enemy.switchSprite('idle')
     }
 
-    // check if player jumps
+    // check if player 1 jumps
     if (player.velocity.y < 0) {
         player.switchSprite('jump')
     }
 
-    //player landing
+    //player 1 landing
     if (player.velocity.y > 0) {
         player.switchSprite('fall')
+    }
+
+    // player 2 jump
+    if (enemy.velocity.y < 0) {
+        enemy.switchSprite('jump')
+    }
+
+    //player 2 landing
+    if (enemy.velocity.y > 0) {
+        enemy.switchSprite('fall')
     }
 
     // check if player 1 successfully strikes

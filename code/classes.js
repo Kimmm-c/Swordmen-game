@@ -123,48 +123,45 @@ class Fighter extends Sprite {
             case 'idle':
                 if (this.image !== this.sprites.idle.image) {
                     this.image = this.sprites.idle.image
-                    player.frame = player.sprites.idle.frame
+                    this.frame = this.sprites.idle.frame
                     this.currentFrame = 0
                 }
                 break;
             case 'run':
                 if (this.image !== this.sprites.run.image) {
-                    player.image = player.sprites.run.image
-                    player.frame = player.sprites.run.frame
+                    this.image = this.sprites.run.image
+                    this.frame = this.sprites.run.frame
                     this.currentFrame = 0
                 }
                 break;
             case 'jump':
                 if (this.image !== this.sprites.jump.image) {
-                    player.image = player.sprites.jump.image
-                    player.frame = player.sprites.jump.frame
+                    this.image = this.sprites.jump.image
+                    this.frame = this.sprites.jump.frame
                     this.currentFrame = 0
                 }
                 break;
             case 'fall':
                 if (this.image !== this.sprites.fall.image) {
-                    player.image = player.sprites.fall.image
-                    player.frame = player.sprites.fall.frame
+                    this.image = this.sprites.fall.image
+                    this.frame = this.sprites.fall.frame
                     this.currentFrame = 0
                 }
                 break;
             case 'attack1':
                 if (this.image !== this.sprites.attack1.image) {
-                    player.image = player.sprites.attack1.image
-                    player.frame = player.sprites.attack1.frame
+                    this.image = this.sprites.attack1.image
+                    this.frame = this.sprites.attack1.frame
                     this.currentFrame = 0
                 }
                 break;
             case 'attack2':
                 if (this.image !== this.sprites.attack2.image) {
-                    player.image = player.sprites.attack2.image
-                    player.frame = player.sprites.attack2.frame
+                    this.image = this.sprites.attack2.image
+                    this.frame = this.sprites.attack2.frame
                     this.currentFrame = 0
                 }
                 break;
-
         }
-
-
     }
 }
