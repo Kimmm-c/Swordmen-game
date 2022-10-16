@@ -10,11 +10,19 @@
     <div class="" style="position: relative; display:inline-block">
         <div class="" style="position: absolute; display:flex; width: 100%; align-items: center; padding: 20px">
             <!-- player 1 health -->
-            <div class="" style="background-color: yellow; height: 30px; width: 100%;"></div>
+            <div style="position: relative; height: 30px; width: 100%; display: flex; justify-content: flex-end;">
+                <div style="background-color: yellow; height: 30px; width: 100%"></div>
+                <div id="player1Health"
+                    style="position: absolute; background: green; top: 0; bottom: 0; right: 0; width: 100%"></div>
+            </div>
             <!-- time -->
             <div class="" style="background-color: red; height: 100px; width: 100px; flex-shrink:0"></div>
             <!-- player 2 health -->
-            <div class="" style="background-color: yellow; height: 30px; width: 100%;"></div>
+            <div style="position: relative; height: 30px; width: 100%;">
+                <div style="background-color: yellow; height: 30px;"></div>
+                <div id="player2Health"
+                    style="position: absolute; background: green; top: 0; left: 0; bottom: 0; right: 0"></div>
+            </div>
         </div>
         <canvas></canvas>
     </div>

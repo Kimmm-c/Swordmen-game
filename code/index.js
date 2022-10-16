@@ -26,6 +26,7 @@ class Sprite {
         }
         this.color = color
         this.isAttacking
+        this.health = 100
     }
 
     draw() {
@@ -119,12 +120,16 @@ function animate() {
 
     // check if player 1 successfully strikes
     if (detectCollision(player, enemy) && player.isAttacking) {
+        enemy.health -= 20
+        document.querySelector('#player2Health').style.width = enemy.health + "%"
         console.log('you hit the enemy')
     }
     player.isAttacking = false;
 
     // check if player 2 successfully strikes
     if (detectCollision(enemy, player) && enemy.isAttacking) {
+        player.health -= 20
+        document.querySelector('#player1Health').style.width = player.health + "%"
         console.log('enemy hit you')
     }
     enemy.isAttacking = false;
