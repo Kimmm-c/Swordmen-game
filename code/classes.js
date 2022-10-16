@@ -45,7 +45,15 @@ class Sprite {
 }
 
 class Fighter extends Sprite {
-    constructor({ position, velocity, color, imageSrc, scale = 1, frame = 1, offset = { x: 0, y: 0 }, sprites }) {
+    constructor({ position, 
+                  velocity, 
+                  color, 
+                  imageSrc, 
+                  scale = 1, 
+                  frame = 1, 
+                  offset = { x: 0, y: 0 }, 
+                  sprites, 
+                  attackBox = {offset: {}, width: undefined, height: undefined} }) {
         super({
             position,
             imageSrc,
@@ -62,9 +70,9 @@ class Fighter extends Sprite {
                 x: this.position.x,
                 y: this.position.y
             },
-            offset,
-            width: 100,
-            height: 50
+            offset: attackBox.offset,
+            width: attackBox.width,
+            height: attackBox.height
         }
         this.color = color
         this.isAttacking
@@ -93,8 +101,12 @@ class Fighter extends Sprite {
         this.draw()
         this.animateFrames()
 
+        //attack boxes
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x
-        this.attackBox.position.y = this.position.y
+        this.attackBox.position.y = this.position.y + this.attackBox.offset.y
+
+        // draw attack boxes
+        // c.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height) 
 
         if (this.position.y + this.height + this.velocity.y >= canvas.height - 97) { // +this.velocity.y because the stop point will be in the air so that we can use gravity
             this.velocity.y = 0

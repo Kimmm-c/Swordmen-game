@@ -63,6 +63,15 @@ const player = new Fighter({
             imageSrc: './img/samuraiMack/Jump.png',
             frame: 2
         }
+    },
+    attackBox: {
+        offset: {
+            x: 0,
+            y: 50
+        },
+        width: 220,
+        height: 50
+
     }
 })
 
@@ -103,6 +112,15 @@ const enemy = new Fighter({
             imageSrc: './img/kenji/Jump.png',
             frame: 2
         }
+    },
+    attackBox: {
+        offset: {
+            x: -150,
+            y: 50,
+        },
+        width: 200,
+        height: 50
+
     }
 
 })
@@ -176,20 +194,29 @@ function animate() {
     }
 
     // check if player 1 successfully strikes
-    if (detectCollision(player, enemy) && player.isAttacking) {
+    if (detectCollision(player, enemy) && player.isAttacking && player.currentFrame === 4) {
         enemy.health -= 20
         document.querySelector('#player2Health').style.width = enemy.health + "%"
         console.log('you hit the enemy')
+        player.isAttacking = false;
     }
-    player.isAttacking = false;
+
+    if( player.isAttacking && player.currentFrame === 4) {
+        player.isAttacking = false;
+    }
+    
 
     // check if player 2 successfully strikes
-    if (detectCollision(enemy, player) && enemy.isAttacking) {
+    if (detectCollision(enemy, player) && enemy.isAttacking && enemy.currentFrame === 2) {
         player.health -= 20
         document.querySelector('#player1Health').style.width = player.health + "%"
         console.log('enemy hit you')
+        enemy.isAttacking = false;
     }
-    enemy.isAttacking = false;
+    
+    if( enemy.isAttacking && enemy.currentFrame === 2) {
+        enemy.isAttacking = false;
+    }
 
     // end game if a player's health <= 0
     if (player.health <= 0 || enemy.health <= 0) {
