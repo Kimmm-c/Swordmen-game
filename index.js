@@ -33,7 +33,7 @@ const player = new Fighter({
     imageSrc: './img/samuraiMack/Idle.png',
     scale: 2.5,
     frame: 8,
-    offset: {x: 215, y: 157},
+    offset: { x: 215, y: 157 },
     sprites: {
         idle: {
             imageSrc: './img/samuraiMack/Idle.png',
@@ -45,15 +45,15 @@ const player = new Fighter({
         },
         attack1: {
             imageSrc: './img/samuraiMack/Attack1.png',
-            frame: 8
+            frame: 6
         },
         attack2: {
             imageSrc: './img/samuraiMack/Attack2.png',
-            frame: 8
+            frame: 6
         },
         fall: {
             imageSrc: './img/samuraiMack/Fall.png',
-            frame: 8
+            frame: 2
         },
         death: {
             imageSrc: './img/samuraiMack/Death.png',
@@ -74,7 +74,7 @@ const enemy = new Fighter({
     imageSrc: './img/kenji/Idle.png',
     scale: 2.5,
     frame: 4,
-    offset: {x: 215, y: 170}
+    offset: { x: 215, y: 170 }
 })
 
 const keys = {
@@ -102,7 +102,7 @@ function animate() {
     player.velocity.x = 0
     enemy.velocity.x = 0
 
-    player.switchSprite('idle')
+
     //left player movement
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -5
@@ -110,6 +110,8 @@ function animate() {
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5
         player.switchSprite('run')
+    } else {
+        player.switchSprite('idle')
     }
 
     //right player movement
@@ -121,9 +123,14 @@ function animate() {
 
     // check if player jumps
     if (player.velocity.y < 0) {
-        player.image = player.sprites.jump.image
-        player.frame = player.sprites.jump.frame
+        player.switchSprite('jump')
     }
+
+    //player landing
+    if (player.velocity.y > 0) {
+        player.switchSprite('fall')
+    }
+
     // check if player 1 successfully strikes
     if (detectCollision(player, enemy) && player.isAttacking) {
         enemy.health -= 20
@@ -174,7 +181,7 @@ window.addEventListener('keydown', (e) => {         //function fired when a key 
             break;
         case 'ArrowUp':
             enemy.velocity.y = -20
-            
+
             break;
 
         //left player attacks
