@@ -67,14 +67,14 @@ const player = new Sprite({
     position: { x: 0, y: 0 },
     velocity: { x: 0, y: 0 },
     color: 'orange',
-    offset: {x: 0, y: 0}
+    offset: { x: 0, y: 0 }
 })
 
 const enemy = new Sprite({
     position: { x: 400, y: 100 },
     velocity: { x: 0, y: 0 },
     color: 'red',
-    offset: {x: -50, y: 0}
+    offset: { x: -50, y: 0 }
 })
 
 const keys = {
@@ -94,6 +94,33 @@ function detectCollision(player1, player2) {
         && player1.attackBox.position.y <= player2.position.y + player2.height
     )
 }
+
+let timer = 10
+let timerID 
+function decreaseTimer() {
+    if (timer > 0) {
+        timer--
+        document.querySelector('#timer').innerHTML = timer
+        timerID = setTimeout(decreaseTimer, 1000)
+    } else {
+        checkHealth(timerID)
+    }
+}
+
+decreaseTimer()
+
+function checkHealth(timerid) {
+    clearTimeout(timerid)
+    if (player.health > enemy.health) {
+        document.querySelector('#tie').innerHTML = 'Player 1 wins'
+    } else if (player.health < enemy.health) {
+        document.querySelector('#tie').innerHTML = 'Player 2 wins'
+    } else {
+        document.querySelector('#tie').innerHTML = 'Tie'
+    }
+    document.querySelector('#tie').style.display = 'flex'
+}
+
 function animate() {
     window.requestAnimationFrame(animate)
     c.fillStyle = 'black'                           //remake the new background for every frame
@@ -134,6 +161,10 @@ function animate() {
     }
     enemy.isAttacking = false;
 
+    // end game if a player's health <= 0
+    if (player.health <= 0 || enemy.health <= 0) {
+        checkHealth(timerID)
+    }
 }
 
 animate()
