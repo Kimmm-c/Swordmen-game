@@ -7,7 +7,7 @@ function detectCollision(player1, player2) {
     )
 }
 
-let timer = 10
+let timer = 60
 let timerID
 function decreaseTimer() {
     if (timer > 0) {

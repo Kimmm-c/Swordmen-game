@@ -151,6 +151,9 @@ function animate() {
     c.fillRect(0, 0, canvas.width, canvas.height)
     background.update()
     shop.update()
+    c.fillStyle = 'rgba(255, 255, 255, 0.1)'    // adding a mostly transparent white layer to create contrast between players and background
+    c.fillRect(0, 0, canvas.width, canvas.height)
+
 
     player.update()
     enemy.update()
@@ -204,7 +207,8 @@ function animate() {
     // check if player 1 successfully strikes
     if (detectCollision(player, enemy) && player.isAttacking && player.currentFrame === 4) {
         enemy.takeHit()
-        document.querySelector('#player2Health').style.width = enemy.health + "%"
+        //document.querySelector('#player2Health').style.width = enemy.health + "%"
+        gsap.to('#player2Health', {width: enemy.health + "%"})      //animate smooth health reduction
         console.log('you hit the enemy')
         player.isAttacking = false;
     }
@@ -217,7 +221,8 @@ function animate() {
     // check if player 2 successfully strikes
     if (detectCollision(enemy, player) && enemy.isAttacking && enemy.currentFrame === 2) {
         player.takeHit()
-        document.querySelector('#player1Health').style.width = player.health + "%"
+        //document.querySelector('#player1Health').style.width = player.health + "%"
+        gsap.to('#player1Health', {width: player.health + "%"})      //animate smooth health reduction
         console.log('enemy hit you')
         enemy.isAttacking = false;
     }
