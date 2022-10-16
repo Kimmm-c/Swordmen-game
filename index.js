@@ -62,6 +62,10 @@ const player = new Fighter({
         jump: {
             imageSrc: './img/samuraiMack/Jump.png',
             frame: 2
+        },
+        takeHit: {
+            imageSrc: './img/samuraiMack/Take hit.png',
+            frame: 4
         }
     },
     attackBox: {
@@ -111,6 +115,10 @@ const enemy = new Fighter({
         jump: {
             imageSrc: './img/kenji/Jump.png',
             frame: 2
+        },
+        takeHit: {
+            imageSrc: './img/kenji/Take hit.png',
+            frame: 3
         }
     },
     attackBox: {
@@ -195,7 +203,7 @@ function animate() {
 
     // check if player 1 successfully strikes
     if (detectCollision(player, enemy) && player.isAttacking && player.currentFrame === 4) {
-        enemy.health -= 20
+        enemy.takeHit()
         document.querySelector('#player2Health').style.width = enemy.health + "%"
         console.log('you hit the enemy')
         player.isAttacking = false;
@@ -208,7 +216,7 @@ function animate() {
 
     // check if player 2 successfully strikes
     if (detectCollision(enemy, player) && enemy.isAttacking && enemy.currentFrame === 2) {
-        player.health -= 20
+        player.takeHit()
         document.querySelector('#player1Health').style.width = player.health + "%"
         console.log('enemy hit you')
         enemy.isAttacking = false;

@@ -45,15 +45,15 @@ class Sprite {
 }
 
 class Fighter extends Sprite {
-    constructor({ position, 
-                  velocity, 
-                  color, 
-                  imageSrc, 
-                  scale = 1, 
-                  frame = 1, 
-                  offset = { x: 0, y: 0 }, 
-                  sprites, 
-                  attackBox = {offset: {}, width: undefined, height: undefined} }) {
+    constructor({ position,
+        velocity,
+        color,
+        imageSrc,
+        scale = 1,
+        frame = 1,
+        offset = { x: 0, y: 0 },
+        sprites,
+        attackBox = { offset: {}, width: undefined, height: undefined } }) {
         super({
             position,
             imageSrc,
@@ -127,10 +127,22 @@ class Fighter extends Sprite {
         // }, 100)
     }
 
+    takeHit() {
+        this.health -= 20
+        this.switchSprite('takeHit')
+    }
+
     switchSprite(sprite) {
+        // overriding other animation with attack animation
         if (this.image === this.sprites.attack1.image
             && this.currentFrame < this.sprites.attack1.frame - 1)
             return
+
+        // overriding other animation with takehit animation
+        if (this.image === this.sprites.takeHit.image
+            && this.currentFrame < this.sprites.takeHit.frame - 1)
+            return
+
         switch (sprite) {
             case 'idle':
                 if (this.image !== this.sprites.idle.image) {
@@ -171,6 +183,13 @@ class Fighter extends Sprite {
                 if (this.image !== this.sprites.attack2.image) {
                     this.image = this.sprites.attack2.image
                     this.frame = this.sprites.attack2.frame
+                    this.currentFrame = 0
+                }
+                break;
+            case 'takeHit':
+                if (this.image !== this.sprites.takeHit.image) {
+                    this.image = this.sprites.takeHit.image
+                    this.frame = this.sprites.takeHit.frame
                     this.currentFrame = 0
                 }
                 break;
